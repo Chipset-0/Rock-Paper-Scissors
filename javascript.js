@@ -1,4 +1,22 @@
 
+const rockBtn = document.querySelector('#rock')
+const paperBtn = document.querySelector('#paper')
+const scissBtn = document.querySelector('#scissors')
+const results = document.querySelector('#resultsPara')
+const score = document.querySelector('#scorePara')
+const humanImage = document.querySelector('#humanImage')
+const computerImage = document.querySelector('#computerImage')
+rockBtn.addEventListener('click', () =>   playGame(0))
+paperBtn.addEventListener('click', () =>  playGame(1))
+scissBtn.addEventListener('click', () =>  playGame(2))
+
+const ROCK_SOURCE = "images/rock.png"
+const PAPER_SOURCE = "images/paper.png"
+const SCISSORS_SOURCE = "images/scissors.png"
+
+let humanScore = 0
+let computerScore = 0
+
 
 function playRound(player1Choice, player2Choice) {
     /*
@@ -45,37 +63,34 @@ function playRound(player1Choice, player2Choice) {
 
 }
 
-function getHumanChoice(message) {
-    let input = "Empty"
-    let isValid = false
-    let result = -1
-    if (message === null)
+function updateImages(humanChoice, computerChoice)
+{
+    switch (humanChoice)
     {
-        message = "Rock(R), Paper(P) or Scissors(S)?"
+        case 0:
+            humanImage.src = ROCK_SOURCE
+            break;
+        case 1:
+            humanImage.src = PAPER_SOURCE
+            break;
+        case 2:
+            humanImage.src = SCISSORS_SOURCE
+            break;
     }
-    while (!isValid) 
+    switch (computerChoice)
     {
-        input = prompt(message)
-        if (input != null)
-        {
-            switch (input.toUpperCase().charAt(0)) {
-                case 'R':
-                    result = 0
-                    isValid = true
-                    break;
-                case 'P':
-                    result = 1
-                    isValid = true
-                    break;
-                case 'S':
-                    result = 2
-                    isValid = true
-                    break;
-            }
-        }
+        case 0:
+            computerImage.src = ROCK_SOURCE
+            break;
+        case 1:
+            computerImage.src = PAPER_SOURCE
+            break;
+        case 2:
+            computerImage.src = SCISSORS_SOURCE
+            break;
     }
-    return result
 }
+
 
 function getComputerChoice() {
     let result = -1
@@ -95,31 +110,40 @@ function getComputerChoice() {
     return result
 }
 
-function playGame() {
-    let humanScore = 0
-    let computerScore = 0
-    const RoundsToPlay = 5
-    let currRounds = 0
-    while (currRounds < RoundsToPlay) {
-        let message = "Round " + currRounds + " : " + humanScore + " | " + computerScore + "\n Rock(R), Paper(P) or Scissors(S)?"
-        switch(playRound(getHumanChoice(message), getComputerChoice()))
-        {
-            case 0:
-                //Tie
-                console.log("It was a Tie.")
-                break;
-            case 1:
-                console.log("You win!")
-                humanScore += 1
-                break;
-            case 2:
-                console.log("You Lost...")
-                computerScore += 1
-                break;
-        }
-        currRounds += 1
+function playGame(humanChoice) {
+    let computerChoice = getComputerChoice()
+    updateImages(humanChoice, computerChoice)
+    switch(playRound(humanChoice, computerChoice))
+    {
+        case 0:
+            //Tie
+            results.textContent = "It was a Tie."
+            break;
+        case 1:
+            results.textContent = "You win!"
+            humanScore += 1
+            break;
+        case 2:
+            results.textContent = "You Lost..."
+            computerScore += 1
+            break;
     }
-    console.log(humanScore, " | ", computerScore)
+    if (humanScore >= 5)
+    {
+        scorePara.textContent = "Win!" + " | " + computerScore
+        results.textContent = "Human Victory!"
+        humanScore = 0
+        computerScore = 0
+    }
+    else if (computerScore >= 5)
+    {
+        scorePara.textContent = humanScore + " | " + "Win!"
+        results.textContent = "Computer Victory!"
+        humanScore = 0
+        computerScore = 0
+    }
+    else
+    {
+        scorePara.textContent = humanScore + " | " + computerScore
+    }
 }
-
-playGame()

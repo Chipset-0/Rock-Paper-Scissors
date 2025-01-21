@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="javascript.js" defer></script>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <script src="javascript.js">
-        console.log("Hello World")
-    </script>
-    Hello World
+        <h1>Rock Paper Scissors</h1>
+    <div class="resultsDiv">
+        <img id="humanImage" src="images/rock.png">
+        <div>
+            <p id="resultsPara"></p>
+            <p id="scorePara">0 | 0</p>
+        </div>
+        <img id="computerImage" src="images/paper.png">
+    </div>
+    <div class="buttonHolder">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>  
+
 </body>
 </html>

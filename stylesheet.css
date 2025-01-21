@@ -1,0 +1,14 @@
+body {
+    text-align: center;
+}
+img {
+    width: 300px;
+    height: 300px;
+}
+
+.resultsDiv {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 80px
+}
